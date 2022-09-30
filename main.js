@@ -1,7 +1,7 @@
 const express = require("express")
 const app = express()
-const productosRouter= require ("./productosRouter")
-const carritoRouter= require ("./carritoRouter")
+const productosRouter= require ("./routers/productosRouter")
+const carritoRouter= require ("./routers/carritoRouter")
 
 //*Middlewares
 app.use(express.urlencoded({extended:true}))

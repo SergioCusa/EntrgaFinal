@@ -2,8 +2,8 @@ const express = require("express")
 const{Router}=express 
 const router = Router()
 const multer = require("multer")
-const Carrito = require("./classCar")
-const cont = new Carrito("./carrito.json")
+const Contenedor = require("../clases/classProd")
+const cont = new Contenedor("./productos.json")
 
 // *Multer configurado
 const storage = multer.diskStorage({
@@ -38,10 +38,12 @@ router.get("/:id",async (req,res)=>{
 
 
 
-router.post("/", async (req,res)=>{
+router.post("/", upload.single("thumbnail") , async (req,res)=>{
   const user = true
   if (user){
-    await cont.crearCar()
+    const {file} = req
+    const {nombre,descripcion,codigo,foto,precio,stock}= req.body
+    await cont.save({nombre,descripcion,codigo,foto,precio,stock})
     const data = await cont.getAll()
     res.send(data)
     }else{

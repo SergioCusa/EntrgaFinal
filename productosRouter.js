@@ -2,8 +2,8 @@ const express = require("express")
 const{Router}=express 
 const router = Router()
 const multer = require("multer")
-const contenedor = require("./classProd")
-const cont = new contenedor("./productos.json")
+const Contenedor = require("./classProd")
+const cont = new Contenedor("./productos.json")
 
 // *Multer configurado
 const storage = multer.diskStorage({

@@ -12,7 +12,7 @@ async crearCar(carrito){
         const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
         const carritos = JSON.parse(data)
         const crearCar = {
-            Carrito : carritos.length + 1,
+            id : carritos.length + 1,
             productos:[],
             total:0
         }  
@@ -52,23 +52,24 @@ async getAll(){
         console.log(err)
     }
 }
+
+
+
+
+async deleteById(id){
+    try{
+        const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
+        const parse = JSON.parse(data)
+        const filtro= parse.filter((objeto) => objeto.id !== id )
+        const string = JSON.stringify(filtro)
+        fs.promises.writeFile(`${this.archivo}`,string)
+        console.log(filtro)
+        }
+    catch(err){
+        console.log("No se encontro ID")
+    }
 }
-
-
-
-// async deleteById(id){
-//     try{
-//         const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
-//         const parse = JSON.parse(data)
-//         const filtro= parse.filter((objeto) => objeto.id !== id )
-//         const string = JSON.stringify(filtro)
-//         fs.promises.writeFile(`${this.archivo}`,string)
-//         console.log(filtro)
-//         }
-//     catch(err){
-//         console.log("No se encontro ID")
-//     }
-// }
+}
 
 
 // updateById(id, objetoNuevo) {

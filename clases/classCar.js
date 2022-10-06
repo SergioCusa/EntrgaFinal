@@ -4,6 +4,7 @@ const fs = require ("fs")
 class Carrito {
     constructor (archivo){
         this.archivo = archivo
+        this.productos = []
     }
       
  
@@ -23,24 +24,26 @@ async crearCar(carrito){
         console.log(carritos)
         return carritos
         }
+
+
+
+// async agregarProdCarr(id){
+//         const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
+//         const carritos = JSON.parse(data)
+//         const filtro = carritos.filter((objeto) => objeto.id !== id )
+//         const carrito = carritos.find((objeto) => objeto.id == id)
+//         if (carrito){
+//             carrito.productos.push(producto)
+//             filtro.push(carrito)
+//             const string = JSON.stringify(filtro)
+//             fs.promises.writeFile(this.archivo,string)
+//             return carrito 
+//         }else{
+//             return null
+//         }
+
+// }        
     
-
-
-
-
-
-// async getById(id){
-//     const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
-//     carritos = JSON.parse(data)
-//     const objeto= objetos.find((objeto) => objeto.id== id )
-//         if (objeto){
-//             return (objeto)
-//             }
-//         else{
-//             throw new Error ("Producto no encontrado!!")
-//             }
-// }
-
 
 async getAll(){
     try{
@@ -54,8 +57,6 @@ async getAll(){
 }
 
 
-
-
 async deleteById(id){
     try{
         const data = await fs.promises.readFile(`${this.archivo}`,"utf-8")   
@@ -64,12 +65,12 @@ async deleteById(id){
         const string = JSON.stringify(filtro)
         fs.promises.writeFile(`${this.archivo}`,string)
         console.log(filtro)
+    }catch(err){
+            console.log("No se encontro ID")
         }
-    catch(err){
-        console.log("No se encontro ID")
-    }
 }
 }
+
 
 
 // updateById(id, objetoNuevo) {

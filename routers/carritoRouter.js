@@ -4,6 +4,8 @@ const router = Router()
 const multer = require("multer")
 const Carrito = require("../clases/classCar")
 const cont = new Carrito("./carrito.json")
+const Contenedor = require("../clases/classProd")
+const contenedor = new Contenedor ("./productos.json")
 
 // *Multer configurado
 const storage = multer.diskStorage({
@@ -18,24 +20,16 @@ const storage = multer.diskStorage({
   
   // *Multer ejecutado
 const upload = multer({storage})
+
+
+
   
   //*Declaracion de rutas
+
 router.get("/", async (req,res)=>{
   const data = await cont.getAll()
     res.send(data)
 })
-  
-
-router.get("/:id",async (req,res)=>{
-    const {id} = req.params
-    try {
-      const data = await cont.getById(id)
-        res.send(data)
-    }catch(e){
-        res.status(404).send({error:true, msj: e.message})
-      }    
-})
-
 
 
 router.post("/", async (req,res)=>{
@@ -48,6 +42,19 @@ router.post("/", async (req,res)=>{
       res.send("usted no es admin")
     }
 })
+
+// router.post("/productos",async (req,res)=>{
+//   res.send("Hola")
+//   const user = true
+//   if (user){
+//     const {id} = req.params
+//     const prodNuevo = await contenedor.getById
+//     const data = await cont.agregarProdCarr(req.params.id,prodNuevo)
+//     res.send(data)
+//   }else{
+//     return "No se pudo completar la accion"
+//   }
+// })
   
     
 router.put("/:id", (req, res) => {
@@ -67,12 +74,14 @@ router.put("/:id", (req, res) => {
 })
     
 
-router.delete("/:id",(req,res)=>{
+router.delete("/:id",async(req,res)=>{
   const user = true
     if (user){
       try {
       const { id } = req.params
-      res.send(cont.deleteById(parseInt(id)))
+      await cont.deleteById(parseInt(id))
+      const data = await cont.getAll()
+      res.send(data)
       }catch(err){
     res.status(404).send(err.msg)
             }
